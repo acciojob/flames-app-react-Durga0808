@@ -1,16 +1,21 @@
-import React, { useState } from "react";
+import React, {Component, useState} from "react";
 import '../styles/App.css';
 
-const flamesResult = ["Siblings", "Friends", "Love", "Affection", "Marriage", "Enemy"];
+class App extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            name1: "",
+            name2: "",
+            result: ""
+        };
+    }
 
-const App = () => {
-    const [name1, setName1] = useState("");
-    const [name2, setName2] = useState("");
-    const [result, setResult] = useState("");
+    calculateFLAMES = () => {
+        const { name1, name2 } = this.state;
 
-    const calculateFLAMES = () => {
         if (name1 === "" || name2 === "") {
-            setResult("Please Enter valid input");
+            this.setState({ result: "Please Enter valid input" });
             return;
         }
 
@@ -29,47 +34,62 @@ const App = () => {
         const count = remainingChars.length;
         const resultIndex = count % 6;
 
-        setResult(flamesResult[resultIndex]);
+        const flamesResult = ["Siblings", "Friends", "Love", "Affection", "Marriage", "Enemy"];
+        this.setState({ result: flamesResult[resultIndex] });
     };
 
-    const clearFields = () => {
-        setName1("");
-        setName2("");
-        setResult("");
+    clearFields = () => {
+        this.setState({
+            name1: "",
+            name2: "",
+            result: ""
+        });
     };
 
-    return (
-        <div id="main">
-            <h1>FLAMES Game</h1>
-            <input
-                data-testid="input1"
-                type="text"
-                value={name1}
-                onChange={(e) => setName1(e.target.value)}
-                placeholder="Enter first name"
-            />
-            <input
-                data-testid="input2"
-                type="text"
-                value={name2}
-                onChange={(e) => setName2(e.target.value)}
-                placeholder="Enter second name"
-            />
-            <button
-                data-testid="calculate_relationship"
-                onClick={calculateFLAMES}
-            >
-                Calculate Relationship
-            </button>
-            <button
-                data-testid="clear"
-                onClick={clearFields}
-            >
-                Clear
-            </button>
-            {result && <h3 data-testid="answer">{result}</h3>}
-        </div>
-    );
-};
+    handleInputChange = (event) => {
+        this.setState({
+            [event.target.name]: event.target.value
+        });
+    };
+
+    render() {
+        return (
+            <div id="main">
+                <h1>FLAMES Game</h1>
+                <input
+                    data-testid="input1"
+                    type="text"
+                    name="name1"
+                    value={this.state.name1}
+                    onChange={this.handleInputChange}
+                    placeholder="Enter first name"
+                />
+                <input
+                    data-testid="input2"
+                    type="text"
+                    name="name2"
+                    value={this.state.name2}
+                    onChange={this.handleInputChange}
+                    placeholder="Enter second name"
+                />
+                <button
+                    data-testid="calculate_relationship"
+                    onClick={this.calculateFLAMES}
+                >
+                    Calculate Relationship
+                </button>
+                <button
+                    data-testid="clear"
+                    onClick={this.clearFields}
+                >
+                    Clear
+                </button>
+                {this.state.result && <h3 data-testid="answer">{this.state.result}</h3>}
+            </div>
+        );
+    }
+}
+
+
 
 export default App;
