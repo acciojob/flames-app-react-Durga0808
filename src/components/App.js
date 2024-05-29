@@ -85,7 +85,7 @@ class App extends Component {
                 >
                     Clear
                 </button>
-                {this.state.result && <h3 data-testid="answer">{this.state.result}</h3>}
+                <h3 data-testid="answer">{this.state.result}</h3>
             </div>
         );
     }
