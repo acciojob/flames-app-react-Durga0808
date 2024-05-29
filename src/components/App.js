@@ -1,4 +1,4 @@
-import React, {Component, useState} from "react";
+import React, { Component } from "react";
 import '../styles/App.css';
 
 class App extends Component {
@@ -35,6 +35,7 @@ class App extends Component {
         const resultIndex = count % 6;
 
         const flamesResult = ["Siblings", "Friends", "Love", "Affection", "Marriage", "Enemy"];
+        console.log(`Result Index: ${resultIndex}, Relationship: ${flamesResult[resultIndex]}`);
         this.setState({ result: flamesResult[resultIndex] });
     };
 
@@ -89,7 +90,5 @@ class App extends Component {
         );
     }
 }
-
-
 
 export default App;
